@@ -1,3 +1,4 @@
+// guess - игра, в которой игрок должен угадать случайное число
 package main
 
 import (
@@ -15,11 +16,12 @@ func main() {
 
 	fmt.Println("I've chosen a random number between 1 and 100.")
 	fmt.Println("Can you guess it?")
-	fmt.Println(target)
 
 	reader := bufio.NewReader(os.Stdin)
 
-	for x := 0; x < 10; x++ {
+	success := false
+	for guesses := 0; guesses < 10; guesses++ {
+		fmt.Println("You have", 10-guesses, "guesses left.")
 
 		fmt.Println("Make a guess: ")
 		input, err := reader.ReadString('\n')
@@ -37,6 +39,14 @@ func main() {
 			fmt.Println("Oops. Your guess was LOW.")
 		} else if guess > target {
 			fmt.Println("Oops. Your guess was HIGH.")
+		} else {
+			success = true
+			fmt.Println("Congratulations! You guessed number", target, "correctly!")
+			break
 		}
+	}
+
+	if !success {
+		fmt.Println("Sorry, you didn't guess my number. It was:", target)
 	}
 }
